@@ -1,0 +1,16 @@
+body{
+  cursor: crosshair;
+}
+#myImage{
+  height: 55px;
+}
+.sky{
+  height: 400px;
+  width: 100%;
+  background-color: blue;
+}
+.ground{
+  height: 150px;
+  width: 100%;
+  background-color: green;
+}
