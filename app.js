@@ -30,7 +30,7 @@ function Duck(){
   // left: '0px',
   height: '55px',
   })
-// every other duck start at opposite side 
+// every other duck start at opposite side
   if(this.id % 2 == 0){
     this.selector.css({
       left: '0px',
@@ -56,5 +56,6 @@ function Duck(){
   this.selector.click(function () {
    console.log("BOOM!");
    $(this).attr('src','images/bam-md.png')
+   // add to player score
   })
 }
