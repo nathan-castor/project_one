@@ -26,15 +26,33 @@ function Duck(){
   this.selector = $('#duck-' + this.id)
   this.selector.css({
   top: Math.floor(Math.random() * 400) + 'px',
-  position: 'relative',
-  left: '0px',
-  height: '55px'
+  //position: 'relative',
+  // left: '0px',
+  height: '55px',
   })
-  this.selector.animate({
-   left: "880px"
-  }, ((Math.random() * 2000) + 4000), function () {
-   $(this).remove()
-  })
+// every other duck start at opposite side 
+  if(this.id % 2 == 0){
+    this.selector.css({
+      left: '0px',
+      position: 'relative'
+    })
+    this.selector.animate({
+     left: "880px"
+    }, ((Math.random() * 2000) + 4000), function () {
+     $(this).remove()
+    })
+    }else {
+      this.selector.css({
+        right: '0px',
+        position: 'absolute'
+      })
+      this.selector.animate({
+       right: "880px"
+      }, ((Math.random() * 2000) + 4000), function () {
+       $(this).remove()
+      })
+    }
+
   this.selector.click(function () {
    console.log("BOOM!");
    $(this).attr('src','images/bam-md.png')
