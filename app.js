@@ -2,7 +2,8 @@
 var imgObj = null;
 var animate ;
 var $sky = $('.sky')
-
+var bamPic = 'images/BAM.png'
+var bamPic2 = 'images/bam-md.png'
 var game = {
   currentPlayer: '',
   playerOne: '',
@@ -37,25 +38,29 @@ function Duck(){
       position: 'relative'
     })
     this.selector.animate({
-     left: "880px"
-    }, ((Math.random() * 2000) + 4000), function () {
+     left: "880px" //change to window.length
+   }, ((Math.random() * 2000) + 4000)).animate({
+     left: '0px'
+   }, 2000, function(){
      $(this).remove()
-    })
+   })
     }else {
       this.selector.css({
         right: '0px',
         position: 'absolute'
       })
       this.selector.animate({
-       right: "880px"
-      }, ((Math.random() * 2000) + 4000), function () {
+       right: "880px" //change to window.length
+     }, ((Math.random() * 2000) + 4000)).animate({
+       right: '0px'
+     }, 2000, function () {
        $(this).remove()
       })
     }
 
   this.selector.click(function () {
    console.log("BOOM!");
-   $(this).attr('src','images/bam-md.png')
+   $(this).attr('src',bamPic2)
    // add to player score
   })
 }
