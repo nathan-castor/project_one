@@ -6,65 +6,114 @@ var bamPic = 'images/BAM.png'
 var bamPic2 = 'images/bam-md.png'
 
 var game = {
-  currentPlayer: '',
-  playerOne: '',
-  playerTwo: '',
-  init: '',
-  round: [1,2,3],
+  playerOne: {
+    score: 0,
+    misses: 0
+  },
+  playerTwo: {
+    score: 0,
+    misses: 0
+  },
+  round: 1,
   level: 1,
   winner: '',
-  escapeSpeed: 4000
+  escapeSpeed: 3500,
+  ducksThisRound: 0
 }
+game.currentPlayer = game.playerOne
 
-function start() {
+function start() { //startROUND
   var numDucks = game.level + 2
-  for (var i = 0; i < numDucks; i++) {
+
+  for (var j = 0; j < numDucks; j+=1) { //making the ducks based on current level
+    console.log("Made duck " + j);
     new Duck()
+    game.ducksThisRound += 1
   }
 }
 
+function checkEndofRound() {
+  if (game.ducksThisRound == 0) { // checking if round is over
+    console.log("It's the end of round");
+    if (checkEndofGame()) {  //checking for a loss
+      window.alert("game over")
+      window.alert("your score: " + game.currentPlayer.score)
+    }else { // iterating to next round
+      console.log("starting next round");
+      if (game.round < 4) {
+        game.round += 1
+        console.log('start round  ' + game.round)
+        start()
+      }
+    }//end else
+  }else{
+    console.log("There's still ducks");
+  }//end check for no ducks
+}//end function
+function checkEndofGame() {
+  if (game.currentPlayer.misses == 3) {
+    return true
+  }else {
+    return false
+  }
+}
+
+// Add click event everywhere in body that makes a gun shot sound
+//$('body').click()
+
+// Create ducks with all the functionality built in
 function Duck(){
   this.id = $('.duck').length
   $sky.append('<img class="duck" id="duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
   this.selector = $('#duck-' + this.id)
   this.selector.css({
   top: Math.floor(Math.random() * 400) + 'px',
-  //position: 'relative',
-  // left: '0px',
   height: '55px',
   position: 'absolute'
   })
 // every other duck start at opposite side
-  if(this.id % 2 == 0){
+  if(this.id % 2 == 0){ // start duck on the left
     this.selector.css({
       left: '0px',
     })
     this.selector.animate({
      left: "880px" //change to window.length
-   }, ((Math.random() * 1000) + 3000)).animate({
+   }, ((Math.random() * 1000) + 2000)).animate({
      left: '0px'
    }, game.escapeSpeed, function(){
      $(this).remove()
+     game.currentPlayer.misses +=1
+     game.ducksThisRound -= 1
+     checkEndofRound()
    })
-    }else {
+  }else { // start duck on the right
       this.selector.css({
         right: '0px',
       })
       this.selector.animate({
        right: "880px" //change to window.length
-     }, ((Math.random() * 1000) + 3000)).animate({
+     }, ((Math.random() * 1000) + 2000)).animate({
        right: '0px'
      }, game.escapeSpeed, function () {
        $(this).remove()
+       game.currentPlayer.misses +=1
+       game.ducksThisRound -= 1
+       checkEndofRound()
       })
     }
 
   this.selector.click(function () {
-   console.log("BOOM!");
-   $(this).attr('src',bamPic2)
-   $(this).stop().stop().hide(500, function () {
-     $(this).remove()
-   })
-  // add to player score
+    console.log("BOOM!");
+    $(this).attr('src',bamPic2)
+    $(this).stop().stop().hide(500, function () {
+      $(this).remove()
+    })
+    // add noise to click event
+    // Noise here
+    // remove ducks
+    game.ducksThisRound -= 1
+    // add to player score
+    game.currentPlayer.score++
+    checkEndofRound()
   })
-}
+}//END of DUCK CONSTRUCTOR
