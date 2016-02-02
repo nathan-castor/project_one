@@ -12,19 +12,23 @@ var bamPic2 = 'images/bam-md.png'
 
 var game = {
   playerOne: {
+    name: 'Player One',
     score: 0,
     misses: 0,
     level: 1,
     round: 1,
+    done: false
   },
   playerTwo: {
+    name: 'Player Two',
     score: 0,
     misses: 0,
     level: 1,
     round: 1,
+    done: false
   },
   winner: '',
-  escapeSpeed: 3500,
+  escapeSpeed: 5000,
   ducksThisRound: 0
 }
 
@@ -36,7 +40,6 @@ function startRound() { //startROUND
   var numDucks = game.currentPlayer.level + 2
 
   for (var j = 0; j < numDucks; j+=1) { //making the ducks based on current level
-    console.log("Made duck " + j);
     new Duck()
     game.ducksThisRound += 1
   }
@@ -65,9 +68,7 @@ function Duck(){
    }, game.escapeSpeed, function(){
      $(this).remove()
      game.currentPlayer.misses +=1
-     console.log('misses ' + game.currentPlayer.misses);
      game.ducksThisRound -= 1
-     console.log('ducks this round ' + game.ducksThisRound);
      checkEOR()
    })
   }else { // start duck on the right
@@ -95,7 +96,6 @@ function Duck(){
     // Noise here
     // remove ducks
     game.ducksThisRound -= 1
-    console.log('ducks this round ' + game.ducksThisRound);
     // add to player score
     game.currentPlayer.score++
     checkEOR()
@@ -109,8 +109,7 @@ function Duck(){
 // ************************************************************************
 function checkEOR() {
   if (eor()) { // checking if round is over
-    console.log("It's the end of round");
-    if (loss()) { // check if end of game for one player
+    if (checkLoss()) { // check if end of game for one player
       if (eog()) { // check if game is over
         whoWon()
       }else { // if game is not over end game for current player and switch players
@@ -124,7 +123,7 @@ function checkEOR() {
       }
     }
   }else{ // if not end of round
-    console.log("There's still ducks");
+    //There's still ducks do nothing
   }//end check for no ducks
 }//end function
 
@@ -135,7 +134,7 @@ function checkEOR() {
 function eor() {
   return game.ducksThisRound == 0
 }
-function loss() {
+function checkLoss() {
   return game.currentPlayer.misses >= 3
 }
 function eol() {
@@ -146,9 +145,10 @@ function eog() {
 }
 function loss() {
   console.log("end of game for "+ game.currentPlayer);
-  window.alert(game.currentPlayer + " You're done!")
+  window.alert(game.currentPlayer.name + " You're done!")
+  game.currentPlayer.done = true
   switchPlayers()
-  window.alert(game.currentPlayer + " Get READY")
+  window.alert(game.currentPlayer.name + " Get READY for level" + game.currentPlayer.level)
   setTimeout(startRound, 3000)
 }
 function switchPlayers() {
@@ -165,25 +165,27 @@ function switchPlayers() {
 }
 function whoWon() {
   if (game.playerOne.score > game.playerTwo.score) {
-    window.alert("game over " +game.playerOne+"wins! \nplayer one score: " + game.playerOne.score + "\nplayer two score: "+game.playerTwo.score)
-  }else if (game.playerOne.score > game.playerTwo.score) {
-    window.alert("game over " +game.playerTwo+"wins! \nplayer one score: " + game.playerOne.score + "\nplayer two score: "+game.playerTwo.score)
+    window.alert("game over " +game.playerOne.name+" wins! \nplayer one score: " + game.playerOne.score + "\nplayer two score: "+game.playerTwo.score)
+  }else if (game.playerOne.score < game.playerTwo.score) {
+    window.alert("game over " +game.playerTwo.name+" wins! \nplayer one score: " + game.playerOne.score + "\nplayer two score: "+game.playerTwo.score)
   }else {
     window.alert("Tie Game! \nplayer one score: " + game.playerOne.score + "\nplayer two score: "+game.playerTwo.score)
   }
 }
 function nextRound() {
   game.currentPlayer.round += 1
-  console.log(game.currentPlayer + 'start round:  ' + game.currentPlayer.round)
+  console.log(game.currentPlayer.name + 'start round:  ' + game.currentPlayer.round)
   startRound()
 }
 function nextLevel() {
-    window.alert(game.currentPlayer+ " You passed this Level. Next player!");
+    window.alert(game.currentPlayer.name+ " You passed this Level. Next player!");
     game.currentPlayer.misses = 0
     game.currentPlayer.round = 1
     game.currentPlayer.level += 1
-    // switch to other player
-    switchPlayers()
+    if (game.playerOne.done == false && game.playerTwo.done == false) {
+      switchPlayers()
+    }
     // Add delay
-    setTimeout(start, 3000)
+    setTimeout(startRound, 3000)
+    console.log("new level " + game.currentPlayer.level);
 }
