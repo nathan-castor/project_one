@@ -40,10 +40,12 @@ function checkEndofRound() {
       window.alert("your score: " + game.currentPlayer.score)
     }else { // iterating to next round
       console.log("starting next round");
-      if (game.round < 4) {
+      if (game.round <= 3) {
         game.round += 1
         console.log('start round  ' + game.round)
         start()
+      }else {
+        window.alert("You passed this Level");
       }
     }//end else
   }else{
@@ -51,11 +53,7 @@ function checkEndofRound() {
   }//end check for no ducks
 }//end function
 function checkEndofGame() {
-  if (game.currentPlayer.misses == 3) {
-    return true
-  }else {
-    return false
-  }
+  return game.currentPlayer.misses == 3
 }
 
 // Add click event everywhere in body that makes a gun shot sound
@@ -64,26 +62,28 @@ function checkEndofGame() {
 // Create ducks with all the functionality built in
 function Duck(){
   this.id = $('.duck').length
-  $sky.append('<img class="duck" id="duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
-  this.selector = $('#duck-' + this.id)
+  $sky.append('<img class="duck duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
+  this.selector = $('.duck-' + this.id)
   this.selector.css({
   top: Math.floor(Math.random() * 400) + 'px',
   height: '55px',
   position: 'absolute'
   })
 // every other duck start at opposite side
-  if(this.id % 2 == 0){ // start duck on the left
+  if(game.ducksThisRound % 2 == 0){ // start duck on the left
     this.selector.css({
       left: '0px',
     })
     this.selector.animate({
      left: "880px" //change to window.length
-   }, ((Math.random() * 1000) + 2000)).animate({
+   }, ((Math.random() * 2000) + 2000)).animate({
      left: '0px'
    }, game.escapeSpeed, function(){
      $(this).remove()
      game.currentPlayer.misses +=1
+     console.log('misses ' + game.currentPlayer.misses);
      game.ducksThisRound -= 1
+     console.log('ducks this round ' + game.ducksThisRound);
      checkEndofRound()
    })
   }else { // start duck on the right
@@ -92,7 +92,7 @@ function Duck(){
       })
       this.selector.animate({
        right: "880px" //change to window.length
-     }, ((Math.random() * 1000) + 2000)).animate({
+     }, ((Math.random() * 2000) + 2000)).animate({
        right: '0px'
      }, game.escapeSpeed, function () {
        $(this).remove()
@@ -103,7 +103,7 @@ function Duck(){
     }
 
   this.selector.click(function () {
-    console.log("BOOM!");
+    console.log('this is the duck element',this);
     $(this).attr('src',bamPic2)
     $(this).stop().stop().hide(500, function () {
       $(this).remove()
@@ -112,6 +112,7 @@ function Duck(){
     // Noise here
     // remove ducks
     game.ducksThisRound -= 1
+    console.log('ducks this round ' + game.ducksThisRound);
     // add to player score
     game.currentPlayer.score++
     checkEndofRound()
