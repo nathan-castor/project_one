@@ -4,6 +4,7 @@ var animate ;
 var $sky = $('.sky')
 var bamPic = 'images/BAM.png'
 var bamPic2 = 'images/bam-md.png'
+
 var game = {
   currentPlayer: '',
   playerOne: '',
@@ -11,7 +12,8 @@ var game = {
   init: '',
   round: [1,2,3],
   level: 1,
-  winner: ''
+  winner: '',
+  escapeSpeed: 4000
 }
 
 function start() {
@@ -30,30 +32,29 @@ function Duck(){
   //position: 'relative',
   // left: '0px',
   height: '55px',
+  position: 'absolute'
   })
 // every other duck start at opposite side
   if(this.id % 2 == 0){
     this.selector.css({
       left: '0px',
-      position: 'relative'
     })
     this.selector.animate({
      left: "880px" //change to window.length
    }, ((Math.random() * 2000) + 4000)).animate({
      left: '0px'
-   }, 2000, function(){
+   }, game.escapeSpeed, function(){
      $(this).remove()
    })
     }else {
       this.selector.css({
         right: '0px',
-        position: 'absolute'
       })
       this.selector.animate({
        right: "880px" //change to window.length
      }, ((Math.random() * 2000) + 4000)).animate({
        right: '0px'
-     }, 2000, function () {
+     }, game.escapeSpeed, function () {
        $(this).remove()
       })
     }
@@ -61,6 +62,9 @@ function Duck(){
   this.selector.click(function () {
    console.log("BOOM!");
    $(this).attr('src',bamPic2)
-   // add to player score
+   $(this).stop().stop().hide(500, function () {
+     $(this).remove()
+   })
+  // add to player score
   })
 }
