@@ -41,7 +41,7 @@ function Duck(){
     })
     this.selector.animate({
      left: "880px" //change to window.length
-   }, ((Math.random() * 2000) + 4000)).animate({
+   }, ((Math.random() * 1000) + 3000)).animate({
      left: '0px'
    }, game.escapeSpeed, function(){
      $(this).remove()
@@ -52,7 +52,7 @@ function Duck(){
       })
       this.selector.animate({
        right: "880px" //change to window.length
-     }, ((Math.random() * 2000) + 4000)).animate({
+     }, ((Math.random() * 1000) + 3000)).animate({
        right: '0px'
      }, game.escapeSpeed, function () {
        $(this).remove()
