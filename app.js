@@ -8,14 +8,18 @@ var bamPic2 = 'images/bam-md.png'
 var game = {
   playerOne: {
     score: 0,
-    misses: 0
+    misses: 0,
+    level: 1,
+    round: 1,
   },
   playerTwo: {
     score: 0,
-    misses: 0
+    misses: 0,
+    level: 1,
+    round: 1,
   },
-  round: 1,
-  level: 1,
+  //round: 1,
+  //level: 1,
   winner: '',
   escapeSpeed: 3500,
   ducksThisRound: 0
@@ -23,7 +27,7 @@ var game = {
 game.currentPlayer = game.playerOne
 
 function start() { //startROUND
-  var numDucks = game.level + 2
+  var numDucks = game.currentPlayer.level + 2
 
   for (var j = 0; j < numDucks; j+=1) { //making the ducks based on current level
     console.log("Made duck " + j);
@@ -36,16 +40,20 @@ function checkEndofRound() {
   if (game.ducksThisRound == 0) { // checking if round is over
     console.log("It's the end of round");
     if (checkEndofGame()) {  //checking for a loss
-      window.alert("game over")
-      window.alert("your score: " + game.currentPlayer.score)
+      window.alert("game over your score: " + game.currentPlayer.score)
     }else { // iterating to next round
       console.log("starting next round");
-      if (game.round <= 3) {
-        game.round += 1
-        console.log('start round  ' + game.round)
+      if (game.currentPlayer.round < 3) {
+        game.currentPlayer.round += 1
+        console.log('start round  ' + game.currentPlayer.round)
         start()
       }else {
         window.alert("You passed this Level");
+        game.currentPlayer.misses = 0
+        game.currentPlayer.round = 1
+        game.currentPlayer.level += 1
+        // Add delay
+        setTimeout(start, 3000)
       }
     }//end else
   }else{
@@ -53,7 +61,7 @@ function checkEndofRound() {
   }//end check for no ducks
 }//end function
 function checkEndofGame() {
-  return game.currentPlayer.misses == 3
+  return game.currentPlayer.misses >= 3
 }
 
 // Add click event everywhere in body that makes a gun shot sound
@@ -103,9 +111,8 @@ function Duck(){
     }
 
   this.selector.click(function () {
-    console.log('this is the duck element',this);
     $(this).attr('src',bamPic2)
-    $(this).stop().stop().hide(500, function () {
+    $(this).stop().stop().hide(200, function () {
       $(this).remove()
     })
     // add noise to click event

@@ -1,5 +1,8 @@
 body{
   cursor: crosshair;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 #myImage{
   height: 55px;
