@@ -81,7 +81,7 @@ function Duck(heading){
   $sky.append('<img class="duck duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
   this.selector = $('.duck-' + this.id)
   this.selector.css({
-  top: Math.floor(Math.random() * 400) + 'px',
+  top: Math.floor((Math.random() * 325)+50) + 'px',
   height: '55px',
   position: 'absolute'
   })
@@ -107,6 +107,7 @@ function Duck(heading){
     }).animate(cssObj, game.escapeSpeed, function(){
      $(this).remove()
      game.currentPlayer.misses +=1
+     $('#player'+ game.currentPlayer.name.slice(7,10)+"-misses").html("Misses: "+ game.currentPlayer.misses)
      game.ducksThisRound -= 1
      checkEOR()
    })
@@ -122,7 +123,7 @@ function Duck(heading){
     game.ducksThisRound -= 1
     // add to player score
     game.currentPlayer.score++
-    $('#player'+ game.currentPlayer.name.slice(7,10)).html(game.currentPlayer.name +" "+ game.currentPlayer.score)
+    $('#player'+ game.currentPlayer.name.slice(7,10)+"-score").html("Score: "+ game.currentPlayer.score)
     checkEOR()
   })
 }//END of DUCK CONSTRUCTOR
@@ -197,6 +198,12 @@ function whoWon() {
   }else {
     $('#alerts').html("Tie Game! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }
+  game.playerOne.score = 0
+  game.playerOne.level = 1
+  game.playerOne.round = 1
+  game.playerTwo.score = 0
+  game.playerTwo.level = 1
+  game.playerTwo.round = 1
 }
 function nextRound() {
   game.currentPlayer.round += 1
@@ -222,6 +229,7 @@ var clicks = 0
 function paused() {
   if (clicks % 2 == 0) {
     $('.duck').pause()
+    $('#alerts').pause()
     $('#blocker').css({
       display: 'block',
       zIndex: '5'
@@ -229,6 +237,7 @@ function paused() {
     clicks++
   }else{
     $('.duck').resume()
+    $('#alerts').resume()
     $('#blocker').css({
       display: 'none',
       zIndex: '9998'

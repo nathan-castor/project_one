@@ -20,7 +20,7 @@ body{
   z-index: 9999;
 }
 #alerts{
-  margin-top: 125px;
+  margin-top: 80px;
   font-size: 48px;
   text-align: center;
   color: black;
@@ -32,8 +32,19 @@ body{
   opacity: 0;
   z-index: 9998;
 }
+#playerOne{
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+#playerTwo{
+  display: inline-block;
+  float: right;
+  margin-right: 30px;
+  margin-top: 10px;
+}
 .sky{
-  height: 400px;
+  height: 420px;
   width: 100%;
   background-color: blue;
   margin: 0 auto;
