@@ -1,3 +1,10 @@
+@font-face {
+    font-family: duckhunt;
+    src: fonts/duckhunt.ttf;
+}
+*{
+  font-family: duckhunt;
+}
 body{
   cursor: crosshair;
   -moz-user-select: none;
