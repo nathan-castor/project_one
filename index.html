@@ -7,14 +7,19 @@
 
   </head>
   <body>
-    <div class="sky">
+    <div id="hud">
+      <div id="blocker"></div>
+      <div id="alerts"></div>
     </div>
+    <div class="sky"></div>
     <footer>
       <div class="ground"></div>
       <input type="button" value="Start" onclick="startRound();" />
+      <input type="button" value="Pause" onclick="paused();" />
       <div class="box">score</div>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="jPause.js"></script>
     <script src="app.js"></script>
   </body>
 

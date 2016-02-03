@@ -7,6 +7,24 @@ body{
 #myImage{
   height: 55px;
 }
+#hud {
+  width: 100%;
+  position: absolute;
+  z-index: 9999;
+}
+#alerts{
+  margin-top: 200px;
+  font-size: 48px;
+  text-align: center;
+  color: black;
+}
+#blocker{
+  width: 100%;
+  height: 400px;
+  display: none;
+  opacity: 0;
+  z-index: 9998;
+}
 .sky{
   height: 400px;
   width: 100%;

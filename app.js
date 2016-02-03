@@ -31,23 +31,29 @@ var game = {
   escapeSpeed: 5000,
   ducksThisRound: 0
 }
-
+// var currentPlayer = game.currentPlayer
 // start the game with player One
 game.currentPlayer = game.playerOne
 
 // ********* Start the Round ********************************
 function startRound() { //startROUND
   var numDucks = game.currentPlayer.level + 2
-
-  for (var j = 0; j < numDucks; j+=1) { //making the ducks based on current level
-    new Duck()
-    game.ducksThisRound += 1
-  }
+  $('#alerts').html(game.currentPlayer.name +"<br><h3>ROUND " +game.currentPlayer.round + "</h3>").show(0).delay(2000).hide(400, function(){
+    for (var j = 0; j < numDucks; j+=1) { //making the ducks based on current level
+      if(game.ducksThisRound % 2 == 0){
+        new Duck('left')
+        game.ducksThisRound += 1
+      }else {
+        new Duck('right')
+        game.ducksThisRound += 1
+      }
+    }
+  })
 }
 
 // *********************Duck Constructor**********************
 // Create ducks with all the functionality built in
-function Duck(){
+function Duck(heading){
   this.id = $('.duck').length
   $sky.append('<img class="duck duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
   this.selector = $('.duck-' + this.id)
@@ -56,36 +62,20 @@ function Duck(){
   height: '55px',
   position: 'absolute'
   })
+
 // every other duck start at opposite side
-  if(game.ducksThisRound % 2 == 0){ // start duck on the left
-    this.selector.css({
-      left: '0px',
-    })
-    this.selector.animate({
-     left: "880px" //change to window.length
-   }, ((Math.random() * 2000) + 2000)).animate({
-     left: '0px'
-   }, game.escapeSpeed, function(){
+  // if(game.ducksThisRound % 2 == 0){ // start duck on the left
+  var cssObj = {}
+  var cssObj2 = {}
+  cssObj[heading] = '0px'
+  cssObj2[heading]= '880px'
+    this.selector.css(heading, '0px')
+    this.selector.animate(cssObj2, ((Math.random() * 2000) + 2000)).animate(cssObj, game.escapeSpeed, function(){
      $(this).remove()
      game.currentPlayer.misses +=1
      game.ducksThisRound -= 1
      checkEOR()
    })
-  }else { // start duck on the right
-      this.selector.css({
-        right: '0px',
-      })
-      this.selector.animate({
-       right: "880px" //change to window.length
-     }, ((Math.random() * 2000) + 2000)).animate({
-       right: '0px'
-     }, game.escapeSpeed, function () {
-       $(this).remove()
-       game.currentPlayer.misses +=1
-       game.ducksThisRound -= 1
-       checkEOR()
-      })
-    }
 
   this.selector.click(function () {
     $(this).attr('src',bamPic2)
@@ -102,7 +92,6 @@ function Duck(){
   })
 }//END of DUCK CONSTRUCTOR
 // ********************* End Duck Constructor**********************
-
 
 // ************************************************************************
 // --------- the game logic ----------
@@ -185,7 +174,26 @@ function nextLevel() {
     if (game.playerOne.done == false && game.playerTwo.done == false) {
       switchPlayers()
     }
+    $('#alerts').text(game.currentPlayer.name + "<br>Level " +game.currentPlayer.level).show().delay(2000).hide()
     // Add delay
     setTimeout(startRound, 3000)
     console.log("new level " + game.currentPlayer.level);
+}
+var clicks = 0
+function paused() {
+  if (clicks % 2 == 0) {
+    $('.duck').pause()
+    $('#blocker').css({
+      display: 'block',
+      zIndex: '5'
+    })
+    clicks++
+  }else{
+    $('.duck').resume()
+    $('#blocker').css({
+      display: 'none',
+      zIndex: '9998'
+    })
+    clicks++
+  }
 }
