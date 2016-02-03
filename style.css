@@ -20,7 +20,7 @@ body{
   z-index: 9999;
 }
 #alerts{
-  margin-top: 200px;
+  margin-top: 125px;
   font-size: 48px;
   text-align: center;
   color: black;
@@ -36,13 +36,19 @@ body{
   height: 400px;
   width: 100%;
   background-color: blue;
+  margin: 0 auto;
 }
 .ground{
   height: 150px;
   width: 100%;
   background-color: green;
+  margin: 0 auto;
 }
 .box{
   display: inline;
   margin-left: 10px;
+}
+input {
+  width: 60px;
+  height: 25px;
 }
