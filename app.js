@@ -90,6 +90,9 @@ function Duck(heading){
       "-ms-filter": "FlipH"
     })
   }
+  this.selector.css({
+    "height": "85px"
+  })
 // every other duck start at opposite side
   // if(game.ducksThisRound % 2 == 0){ // start duck on the left
   var cssObjLast = {}
@@ -102,10 +105,7 @@ function Duck(heading){
   fly(duckx, heading, cssObjFirst, cssObjLast)
 
   this.selector.click(function () {
-    $('audio').each(function(){
-      this.pause(); // Stop playing
-      this.currentTime = 0; // Reset time
-    })
+    stopSound()
     //$allAudio.stop()
     if (game.pause == false && game.currentPlayer.bullets > 0) {
       $bullsEye.play()
@@ -311,10 +311,7 @@ var $clickSound = $("#clickSound")[0]
 // body event listener that takes from bullets
 $('.sky').click(function(){
   // stop other sounds
-  $('audio').each(function(){
-    this.pause(); // Stop playing
-    this.currentTime = 0; // Reset time
-  })
+  stopSound()
   //$allAudio.stop()
   if (game.pause == false && game.currentPlayer.bullets > 0) {
     $gunShot.play()
@@ -327,16 +324,20 @@ $('.sky').click(function(){
 })
 var $reload = $('#shotgunReload')[0]
 $('.ground').click(function(){
-  $('audio').each(function(){
-    this.pause(); // Stop playing
-    this.currentTime = 0; // Reset time
-  })
+  stopSound()
   //$allAudio.stop()
   $reload.play()
   game.currentPlayer.bullets = 6
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
-
+function stopSound() {
+  if (!$allAudio.paused) {
+    $('audio').each(function(){
+      this.pause(); // Stop playing
+      this.currentTime = 0; // Reset time
+    })
+  }
+}
 var clicks = 0
 function paused() {
   $('audio').each(function(){
