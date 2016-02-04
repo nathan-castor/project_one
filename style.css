@@ -6,11 +6,18 @@
   font-family: duckhunt;
 }
 body{
+  background-image: url('images/background.png');
   cursor: crosshair;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   border-radius: 10px;
+  /*background image properties*/
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 575px;
+  background-position: 10px 10px 0px 0px;
+  /*background image properties*/
 }
 #myImage{
   height: 55px;
@@ -41,13 +48,13 @@ body{
 .sky{
   height: 420px;
   width: 100%;
-  background-color: blue;
+  /*background-color: blue;*/
   margin: 0 auto;
 }
 .ground{
   height: 150px;
   width: 100%;
-  background-color: green;
+  /*background-color: green;*/
   margin: 0 auto;
 }
 .box{
