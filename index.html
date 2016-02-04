@@ -25,9 +25,27 @@
       <div id="alerts"></div>
 
     </div> <!-- end hud id -->
-    <div class="sky"></div>
+    <div class="sky">
+      <audio id="clickSound">
+      	<source src="sounds/click.mp3"></source>
+      	Your browser isn't invited for super fun audio time.
+      </audio>
+      <audio id="bullsEye">
+      	<source src="sounds/scream.mp3"></source>
+      	Your browser isn't invited for super fun audio time.
+      </audio>
+      <audio id="gunShot">
+      	<source src="sounds/gunShot.mp3"></source>
+      	Your browser isn't invited for super fun audio time.
+      </audio>
+    </div>
     <footer>
-      <div class="ground"></div>
+      <div class="ground">
+        <audio id="shotgunReload">
+        	<source src="sounds/shotgunReload.mp3"></source>
+        	Your browser isn't invited for super fun audio time.
+        </audio>
+      </div>
       <input id="start" type="button" value="Start/Stop" onclick="gameON();" />
       <input id="pause" type="button" value="Pause" onclick="paused();" />
     </footer>

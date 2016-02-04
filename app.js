@@ -5,6 +5,8 @@ var $sky = $('.sky')
 var bamPic = 'images/BAM.png'
 var bamPic2 = 'images/bam-md.png'
 var duckImg = 'images/duck_hunt_bird.GIF'
+var $bullsEye = $("#bullsEye")[0]
+var $allAudio = $("audio")
 
 // Add click event everywhere in body that makes a gun shot sound
 //$('body').click()
@@ -100,7 +102,13 @@ function Duck(heading){
   fly(duckx, heading, cssObjFirst, cssObjLast)
 
   this.selector.click(function () {
+    $('audio').each(function(){
+      this.pause(); // Stop playing
+      this.currentTime = 0; // Reset time
+    })
+    //$allAudio.stop()
     if (game.pause == false && game.currentPlayer.bullets > 0) {
+      $bullsEye.play()
       $(this).attr('src',bamPic2)
       $(this).stop().stop().hide(200, function () {
         $(this).remove()
@@ -297,24 +305,44 @@ function nextLevel() {
     })
   })
 }
+var $gunShot = $("#gunShot")[0]
+var $clickSound = $("#clickSound")[0]
+
 // body event listener that takes from bullets
 $('.sky').click(function(){
-  // bang!
-  if (game.currentPlayer.bullets > 0) {
+  // stop other sounds
+  $('audio').each(function(){
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+  })
+  //$allAudio.stop()
+  if (game.pause == false && game.currentPlayer.bullets > 0) {
+    $gunShot.play()
     game.currentPlayer.bullets -= 1
-  }else {
+  }else if(game.pause == false && game.currentPlayer.bullets == 0){
+    $clickSound.play()
     game.currentPlayer.bullets = 0
   }
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
+var $reload = $('#shotgunReload')[0]
 $('.ground').click(function(){
-  // chickChick!
+  $('audio').each(function(){
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+  })
+  //$allAudio.stop()
+  $reload.play()
   game.currentPlayer.bullets = 6
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
 
 var clicks = 0
 function paused() {
+  $('audio').each(function(){
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+  })
   if (clicks % 2 == 0) {
     console.log("paused");
     game.pause = true
