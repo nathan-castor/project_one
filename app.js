@@ -7,6 +7,7 @@ var bamPic2 = 'images/bam-md.png'
 var duckImg = 'images/duck_hunt_bird.GIF'
 var $bullsEye = $("#bullsEye")[0]
 var $allAudio = $("audio")
+var $dogSelector = $('.dog')
 
 // Add click event everywhere in body that makes a gun shot sound
 //$('body').click()
@@ -45,6 +46,7 @@ function gameON() {
   if (game.started == false) {
     game.started = true
     startRound()
+    dogPhase1()
   }else{
     whoWon()
   }
@@ -140,7 +142,6 @@ function flipImg(duckx,heading) {
       "-ms-filter": "FlipH"
     })
   }else {
-    // $(this).attr('src',duckImg)
     duckx.css({
       "-moz-transform": "scaleX(1)",
       "-o-transform": "scaleX(1)",
@@ -161,7 +162,6 @@ function phase1(duckx, firstPlace, lastPlace, heading) {
       phase2(duckx, lastPlace)
     })
 }
-
 function phase2(duckx, lastPlace) {
 	duckx.animate(lastPlace, game.escapeSpeed, function(){
    $(this).remove()
@@ -170,6 +170,29 @@ function phase2(duckx, lastPlace) {
    game.ducksThisRound -= 1
    checkEOR()
  })
+}
+
+// dog walking
+function dogPhase1() {
+  $('.ground').prepend('<img class="dog" src="images/dog_walking.gif" alt="" />')
+  var dogHeading = 'left'
+  var lastPlace = {}
+  var firstPlace = {}
+  lastPlace[dogHeading] = '0px'
+  firstPlace[dogHeading]= '900px'
+	$('.dog').animate({left: "900px"}, 8000, function () {
+      console.log("animate dog phase 1")
+      flipImg($(".dog"),dogHeading) //possible issue with scope here
+      dogPhase2(lastPlace)
+    })
+}
+function dogPhase2(lastPlace) {
+  console.log('made it to dog phase two')
+	$('.dog').animate(lastPlace, 8000,function () {
+    console.log('executing dog phase two')
+    $('.dog').remove()
+	  dogPhase1()
+	})
 }
 
 // ************************************************************************
@@ -333,28 +356,27 @@ $('.ground').click(function(){
 function stopSound() {
   if (!$allAudio.paused) {
     $('audio').each(function(){
-      this.pause(); // Stop playing
-      this.currentTime = 0; // Reset time
+      $('audio').pause(); // Stop playing
+      $('audio').currentTime = 0; // Reset time
     })
   }
 }
 var clicks = 0
 function paused() {
-  $('audio').each(function(){
-    this.pause(); // Stop playing
-    this.currentTime = 0; // Reset time
-  })
+  stopSound()
   if (clicks % 2 == 0) {
     console.log("paused");
     game.pause = true
     $('.duck').pause()
     $('#alerts').pause()
+    $('.dog').pause()
     clicks++
   }else{
     console.log("unpaused");
     game.pause = false
     $('.duck').resume()
     $('#alerts').resume()
+    $('.dog').resume()
     clicks++
   }
 }

@@ -72,6 +72,10 @@ input{
   height: 30px;
   background-color: red;
 }
+.dog{
+  height: 120px;
+  position: absolute;
+}
 /*.clearSky{
   pointer-events: none;
 }*/
