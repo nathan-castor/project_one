@@ -12,13 +12,14 @@ var duckImg = 'images/duck_hunt_bird.GIF'
 // $('footer').click()
 
 var game = {
-  startClicks: 0,
+  started: false,
   playerOne: {
     name: 'Player One',
     score: 0,
     misses: 0,
     level: 1,
     round: 1,
+    bullets: 6,
     done: false
   },
   playerTwo: {
@@ -27,6 +28,7 @@ var game = {
     misses: 0,
     level: 1,
     round: 1,
+    bullets: 6,
     done: false
   },
   escapeSpeed: 5000,
@@ -38,16 +40,16 @@ var game = {
 game.currentPlayer = game.playerOne
 
 function gameON() {
-  if (game.startClicks == 0) {
-    game.startClicks += 1
+  if (game.started == false) {
+    game.started = true
     startRound()
   }else{
     whoWon()
-    setTimeout(startRound, 3000)
   }
 }
 // ********* Start the Round ********************************
 function startRound() { //startROUND
+  $sky.html('')
   var numDucks = game.currentPlayer.level + 2
   $('#alerts').html(game.currentPlayer.name +"<br><h3>ROUND " +game.currentPlayer.round + "</h3>").show(0).animate({display: 'block'},2000,function () {
     $(this).hide(400, function(){
@@ -72,7 +74,7 @@ function Duck(heading){
   $sky.append('<img class="duck duck-' +this.id+ '" ' + 'src="images/duck_hunt_bird.GIF" />')
   this.selector = $('.duck-' + this.id)
   this.selector.css({
-  top: Math.floor((Math.random() * 325)+50) + 'px',
+  top: Math.floor((Math.random() * 325)+55) + 'px',
   height: '55px',
   position: 'absolute'
   })
@@ -98,7 +100,7 @@ function Duck(heading){
   fly(duckx, heading, cssObjFirst, cssObjLast)
 
   this.selector.click(function () {
-    if (game.pause == false) {
+    if (game.pause == false && game.currentPlayer.bullets > 0) {
       $(this).attr('src',bamPic2)
       $(this).stop().stop().hide(200, function () {
         $(this).remove()
@@ -161,14 +163,6 @@ function phase2(duckx, lastPlace) {
    checkEOR()
  })
 }
-
-  //maybe set up an event listener for click and execute below after translating to my shit
-	// $box.hover(function() {
-	// 	$box.pause();
-	// }, function() {
-	// 	$box.resume();
-	// });
-	//phase1();
 
 // ************************************************************************
 // --------- the game logic ----------
@@ -236,6 +230,8 @@ function switchPlayers() {
   }
 }
 function whoWon() {
+  $('.duck').remove() // clear ducks from the sky
+
   if (game.playerOne.score > game.playerTwo.score) {
     $('#alerts').html("game over " +game.playerOne.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }else if (game.playerOne.score < game.playerTwo.score) {
@@ -243,29 +239,45 @@ function whoWon() {
   }else {
     $('#alerts').html("Tie Game! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }
+  game = {
+    started: false,
+    playerOne: {
+      name: 'Player One',
+      score: 0,
+      misses: 0,
+      level: 1,
+      round: 1,
+      bullets: 6,
+      done: false
+    },
+    playerTwo: {
+      name: 'Player Two',
+      score: 0,
+      misses: 0,
+      level: 1,
+      round: 1,
+      bullets: 6,
+      done: false
+    },
+    escapeSpeed: 5000,
+    ducksThisRound: 0,
+    pause: false
+  }
   game.currentPlayer = game.playerOne
-  game.playerOne.level = 1
-  game.playerOne.round = 1
-  game.playerOne.score = 0
-  game.playerOne.misses = 0
-  game.playerOne.done = false
   $('#playerOne-score').html("Score: "+ game.playerOne.score)
   $('#playerOne-misses').html("Misses: "+ game.playerOne.misses)
-  game.playerTwo.level = 1
-  game.playerTwo.round = 1
-  game.playerTwo.score = 0
-  game.playerTwo.misses = 0
-  game.playerTwo.done = false
+
   $('#playerTwo-score').html("Score: "+ game.playerTwo.score)
   $('#playerTwo-misses').html("Misses: "+ game.playerTwo.misses)
-  game.ducksThisRound = 0
-  $sky.html('')
+
 }
+
 function nextRound() {
   game.currentPlayer.round += 1
   console.log(game.currentPlayer.name + 'start round:  ' + game.currentPlayer.round)
   startRound()
 }
+
 function nextLevel() {
   $('#alerts').html(game.currentPlayer.name+ " You passed this Level!").show().animate({display: 'block'},2000,function () {
     $(this).hide(400,function() {
@@ -285,15 +297,32 @@ function nextLevel() {
     })
   })
 }
+// body event listener that takes from bullets
+$('.sky').click(function(){
+  // bang!
+  if (game.currentPlayer.bullets > 0) {
+    game.currentPlayer.bullets -= 1
+  }else {
+    game.currentPlayer.bullets = 0
+  }
+  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
+})
+$('.ground').click(function(){
+  // chickChick!
+  game.currentPlayer.bullets = 6
+  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
+})
 
 var clicks = 0
 function paused() {
   if (clicks % 2 == 0) {
+    console.log("paused");
     game.pause = true
     $('.duck').pause()
     $('#alerts').pause()
     clicks++
   }else{
+    console.log("unpaused");
     game.pause = false
     $('.duck').resume()
     $('#alerts').resume()

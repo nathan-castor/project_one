@@ -10,6 +10,7 @@ body{
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
+  border-radius: 10px;
 }
 #myImage{
   height: 55px;
@@ -53,11 +54,17 @@ body{
   display: inline;
   margin-left: 10px;
 }
+input{
+  border-radius: 50px;
+}
 #start{
-  width: 80px;
-  height: 30px
+  width: 93px;
+  height: 30px;
+  text-align: center;
+  background-color: orange;
 }
 #pause {
   width: 60px;
   height: 30px;
+  background-color: red;
 }
