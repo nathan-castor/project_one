@@ -11,30 +11,29 @@
 
       <div class="hud">
         <div id="playerOne">Player One
-          <div id="playerOne-score">Score:</div>
-          <div id="playerOne-misses">Misses:</div>
+          <div id="playerOne-score">Score: 0</div>
+          <div id="playerOne-misses">Misses: 0</div>
           <div id="playerOne-score">Bullets:
             <div class="bullets" id="playerOne-bullets"></div>
           </div>
         </div>
         <div id="playerTwo">Player Two
-          <div id="playerTwo-score">Score:</div>
-          <div id="playerTwo-misses">Misses:</div>
+          <div id="playerTwo-score">Score: 0</div>
+          <div id="playerTwo-misses">Misses: 0</div>
           <div id="playerTwo-score">Bullets:
             <div class="bullets" id="playerOne-bullets"></div>
           </div>
         </div>
       </div>
-      
+
       <div id="alerts"></div>
-      <div id="blocker"></div>
 
     </div> <!-- end hud id -->
     <div class="sky"></div>
     <footer>
       <div class="ground"></div>
-      <input type="button" value="Start" onclick="startRound();" />
-      <input type="button" value="Pause" onclick="paused();" />
+      <input id="start" type="button" value="Start/Restart" onclick="gameON();" />
+      <input id="pause" type="button" value="Pause" onclick="paused();" />
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="jPause.js"></script>
