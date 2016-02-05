@@ -374,9 +374,16 @@ function nextLevel() {
   })
 }
 
-
+// ************************************************************************
+// --------- Uhh probably didn't need this comment ----------
+// ************************************************************************
 // body event listener that takes from bullets
-
+function onePlayerMode() {
+  if (game.started == false) {
+    console.log("One player mode activated");
+    game.playerTwo.done = true
+  }
+}
 function stopSound() {
   if (!$('audio').paused) {
     $('audio').each(function(){
