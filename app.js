@@ -8,11 +8,9 @@ var duckImg = 'images/duck_hunt_bird.GIF'
 var $bullsEye = $("#bullsEye")[0]
 var $allAudio = $("audio")
 var $dogSelector = $('.dog')
-
-// Add click event everywhere in body that makes a gun shot sound
-//$('body').click()
-// Later Add a click event in the footer that reloads your gun
-// $('footer').click()
+var $gunShot = $("#gunShot")[0]
+var $clickSound = $("#clickSound")[0]
+var $reload = $('#shotgunReload')[0]
 
 var game = {
   started: false,
@@ -38,8 +36,7 @@ var game = {
   ducksThisRound: 0,
   pause: false
 }
-// var currentPlayer = game.currentPlayer
-// start the game with player One
+
 game.currentPlayer = game.playerOne
 
 function gameON() {
@@ -102,7 +99,7 @@ function Duck(heading){
   var randomSpeed = ((Math.random() * 2000) + 2000)
   cssObjLast[heading] = '0px'
   cssObjFirst[heading]= '880px'
-  // var duckx = $(this)
+
   var duckx = this.selector
   fly(duckx, heading, cssObjFirst, cssObjLast)
 
@@ -328,8 +325,7 @@ function nextLevel() {
     })
   })
 }
-var $gunShot = $("#gunShot")[0]
-var $clickSound = $("#clickSound")[0]
+
 
 // body event listener that takes from bullets
 $('.sky').click(function(){
@@ -345,7 +341,7 @@ $('.sky').click(function(){
   }
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
-var $reload = $('#shotgunReload')[0]
+
 $('.ground').click(function(){
   stopSound()
   //$allAudio.stop()
@@ -354,15 +350,15 @@ $('.ground').click(function(){
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
 function stopSound() {
-  if (!$allAudio.paused) {
+  if (!$('audio').paused) {
     $('audio').each(function(){
-      $('audio').pause(); // Stop playing
-      $('audio').currentTime = 0; // Reset time
-    })
+    this.pause(); // Stop playing
+    this.currentTime = 0; // Reset time
+    });
   }
 }
 var clicks = 0
-function paused() {
+function pauseButton() {
   stopSound()
   if (clicks % 2 == 0) {
     console.log("paused");
