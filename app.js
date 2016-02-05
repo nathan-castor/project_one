@@ -61,6 +61,8 @@ $('.ground').click(function(){
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
 function gameON() {
+  stopSound()
+  $('#startGame')[0].play()
   if (game.started == false) {
     game.started = true
     startRound()
@@ -72,6 +74,8 @@ function gameON() {
 // ********* Start the Round ********************************
 function startRound() { //startROUND
   $sky.html('')
+  stopSound()
+  $('#nextRoundSound')[0].play()
   var numDucks = game.currentPlayer.level + 2
   $('#alerts').html(game.currentPlayer.name +"<br><h3>ROUND " +game.currentPlayer.round + "</h3>").show(0).animate({display: 'block'},2000,function () {
     $(this).hide(400, function(){
@@ -274,6 +278,7 @@ function eog() {
 }
 function loss() {
   console.log("end of game for "+ game.currentPlayer);
+  $('#lossSound')[0].play()
   $('#alerts').html(game.currentPlayer.name +" You're done!").show(0).animate({display: 'block'},2000,function () {
     $(this).hide(400,function() {
     game.currentPlayer.done = true
@@ -300,7 +305,7 @@ function switchPlayers() {
 }
 function whoWon() {
   $('.duck').remove() // clear ducks from the sky
-
+  $('.dog').remove()
   if (game.playerOne.score > game.playerTwo.score) {
     $('#alerts').html("game over " +game.playerOne.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }else if (game.playerOne.score < game.playerTwo.score) {
@@ -360,6 +365,7 @@ function nextLevel() {
         $(this).hide(400,function() {
         // Add delay
         setTimeout(startRound, 3000)
+        $('#nextLevelSound')[0].play()
         console.log("new level " + game.currentPlayer.level);
         })
       })
