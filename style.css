@@ -6,17 +6,19 @@
   font-family: duckhunt;
 }
 body{
+  margin: 0;
+  background-color: black;
   background-image: url('images/background.png');
   cursor: crosshair;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   border-radius: 10px;
+  height: 100%;
   /*background image properties*/
   background-repeat: repeat-x;
   background-attachment: fixed;
-  /*background-size: 100% 575px;*/
-  background-position: 10px 10px 0px 0px;
+  /*background-position: 10px 10px 0px 0px;*/
   /*background image properties*/
 }
 #hud {
@@ -76,6 +78,10 @@ input{
   height: 120px;
   position: absolute;
 }
-/*.clearSky{
-  pointer-events: none;
-}*/
+#game-buttons{
+  margin: 0 auto;
+  height: 70px;
+  width: 100%;
+  background-color: black;
+  text-align: center;
+}

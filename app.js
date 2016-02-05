@@ -11,6 +11,7 @@ var $dogSelector = $('.dog')
 var $gunShot = $("#gunShot")[0]
 var $clickSound = $("#clickSound")[0]
 var $reload = $('#shotgunReload')[0]
+var dogFartCounter = 1
 
 var game = {
   started: false,
@@ -67,7 +68,9 @@ function startRound() { //startROUND
   })
 }
 
-// *********************Duck Constructor**********************
+// ************************************************************************
+// ------------------------------ Duck Constructor ---------------------
+// ************************************************************************
 
 // Create ducks with all the functionality built in
 function Duck(heading){
@@ -90,7 +93,7 @@ function Duck(heading){
     })
   }
   this.selector.css({
-    "height": "85px"
+    "height": "70px"
   })
 // every other duck start at opposite side
   // if(game.ducksThisRound % 2 == 0){ // start duck on the left
@@ -169,6 +172,9 @@ function phase2(duckx, lastPlace) {
  })
 }
 
+// ************************************************************************
+// ------------------ Below is mostly Dog related -------------------
+// ************************************************************************
 // dog walking
 function dogPhase1() {
   $('.ground').prepend('<img class="dog" src="images/dog_walking.gif" alt="" />')
@@ -191,6 +197,21 @@ function dogPhase2(lastPlace) {
 	  dogPhase1()
 	})
 }
+
+//clicking the dog functins
+$('body').on("click",'.dog', function() {
+  console.log("clicked dog")
+  stopSound()
+  if (dogFartCounter < 6) {
+    $('#dogFart'+dogFartCounter)[0].play()
+    dogFartCounter += 1
+    console.log("dog farts " +dogFartCounter );
+  }else {
+    dogFartCounter = 0
+    $('#dogFart'+dogFartCounter)[0].play()
+  }
+  $('.dog').pause().delay(1500).resume()
+})
 
 // ************************************************************************
 // --------- the game logic ----------
