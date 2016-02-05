@@ -21,7 +21,7 @@ var game = {
     misses: 0,
     level: 1,
     round: 1,
-    bullets: 6,
+    bullets: 3,
     done: false
   },
   playerTwo: {
@@ -30,10 +30,10 @@ var game = {
     misses: 0,
     level: 1,
     round: 1,
-    bullets: 6,
+    bullets: 3,
     done: false
   },
-  escapeSpeed: 5000,
+  escapeSpeed: 4250,
   ducksThisRound: 0,
   pause: false
 }
@@ -57,7 +57,7 @@ $('.ground').click(function(){
   stopSound()
   //$allAudio.stop()
   $reload.play()
-  game.currentPlayer.bullets = 6
+  game.currentPlayer.bullets = 3
   $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
 })
 function gameON() {
@@ -321,7 +321,7 @@ function whoWon() {
       misses: 0,
       level: 1,
       round: 1,
-      bullets: 6,
+      bullets: 3,
       done: false
     },
     playerTwo: {
@@ -330,10 +330,10 @@ function whoWon() {
       misses: 0,
       level: 1,
       round: 1,
-      bullets: 6,
+      bullets: 3,
       done: false
     },
-    escapeSpeed: 5000,
+    escapeSpeed: 4250,
     ducksThisRound: 0,
     pause: false
   }
