@@ -39,7 +39,27 @@ var game = {
 }
 
 game.currentPlayer = game.playerOne
+$('.sky').click(function(){
+  // stop other sounds
+  stopSound()
+  //$allAudio.stop()
+  if (game.pause == false && game.currentPlayer.bullets > 0) {
+    $gunShot.play()
+    game.currentPlayer.bullets -= 1
+  }else if(game.pause == false && game.currentPlayer.bullets == 0){
+    $clickSound.play()
+    game.currentPlayer.bullets = 0
+  }
+  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
+})
 
+$('.ground').click(function(){
+  stopSound()
+  //$allAudio.stop()
+  $reload.play()
+  game.currentPlayer.bullets = 6
+  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
+})
 function gameON() {
   if (game.started == false) {
     game.started = true
@@ -207,7 +227,7 @@ $('body').on("click",'.dog', function() {
     dogFartCounter += 1
     console.log("dog farts " +dogFartCounter );
   }else {
-    dogFartCounter = 0
+    dogFartCounter = 1
     $('#dogFart'+dogFartCounter)[0].play()
   }
   $('.dog').pause().delay(1500).resume()
@@ -349,27 +369,7 @@ function nextLevel() {
 
 
 // body event listener that takes from bullets
-$('.sky').click(function(){
-  // stop other sounds
-  stopSound()
-  //$allAudio.stop()
-  if (game.pause == false && game.currentPlayer.bullets > 0) {
-    $gunShot.play()
-    game.currentPlayer.bullets -= 1
-  }else if(game.pause == false && game.currentPlayer.bullets == 0){
-    $clickSound.play()
-    game.currentPlayer.bullets = 0
-  }
-  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
-})
 
-$('.ground').click(function(){
-  stopSound()
-  //$allAudio.stop()
-  $reload.play()
-  game.currentPlayer.bullets = 6
-  $('#player'+ game.currentPlayer.name.slice(7,10)+"-bullets").html("Bullets: "+ game.currentPlayer.bullets)
-})
 function stopSound() {
   if (!$('audio').paused) {
     $('audio').each(function(){
