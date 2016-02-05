@@ -1,6 +1,6 @@
 @font-face {
     font-family: duckhunt;
-    src: fonts/duckhunt.ttf;
+    src: url('fonts/duckhunt.ttf');
 }
 *{
   font-family: duckhunt;

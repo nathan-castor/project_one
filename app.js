@@ -308,7 +308,7 @@ function whoWon() {
   $('.dog').remove()
   $('#endGame')[0].play()
   if (game.playerOne.score > game.playerTwo.score) {
-    $('#alerts').html("game over " +game.playerOne.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
+    $('#alerts').html("Game Over " +game.playerOne.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }else if (game.playerOne.score < game.playerTwo.score) {
     $('#alerts').html("game over " +game.playerTwo.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
   }else {
