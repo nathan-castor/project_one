@@ -306,6 +306,7 @@ function switchPlayers() {
 function whoWon() {
   $('.duck').remove() // clear ducks from the sky
   $('.dog').remove()
+  stopSound()
   $('#endGame')[0].play()
   if (game.playerOne.score > game.playerTwo.score) {
     $('#alerts').html("Game Over " +game.playerOne.name+" wins! <br>player one score: " + game.playerOne.score + "<br>player two score: "+game.playerTwo.score).show(0)
