@@ -382,6 +382,7 @@ function onePlayerMode() {
   if (game.started == false) {
     console.log("One player mode activated");
     game.playerTwo.done = true
+    $('#playerTwo').remove()
   }
 }
 function stopSound() {
